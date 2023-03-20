@@ -11,6 +11,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -233,29 +234,27 @@ function App() {
         <FormControl>
           <FormLabel>เวลา</FormLabel>
           <RadioGroup onChange={setTime} value={time} colorScheme="teal">
-            <Stack
-              direction={["column", "row"]}
-              wrap="wrap"
-              spacing="space-between"
-            >
-              <Radio isDisabled={isUnavailable("12")} value="12">
-                12:00 น.
-              </Radio>
-              <Radio isDisabled={isUnavailable("13")} value="13">
-                13:00 น.
-              </Radio>
-              <Radio isDisabled={isUnavailable("14")} value="14">
-                14:00 น.
-              </Radio>
-              <Radio isDisabled={isUnavailable("15")} value="15">
-                15:00 น.
-              </Radio>
-              <Radio isDisabled={isUnavailable("16")} value="16">
-                16:00 น.
-              </Radio>
-              <Radio isDisabled={isUnavailable("17")} value="17">
-                17:00 น.
-              </Radio>
+            <Stack>
+              <SimpleGrid columns={2}>
+                <Radio isDisabled={isUnavailable("12")} value="12">
+                  12:00 น.
+                </Radio>
+                <Radio isDisabled={isUnavailable("13")} value="13">
+                  13:00 น.
+                </Radio>
+                <Radio isDisabled={isUnavailable("14")} value="14">
+                  14:00 น.
+                </Radio>
+                <Radio isDisabled={isUnavailable("15")} value="15">
+                  15:00 น.
+                </Radio>
+                <Radio isDisabled={isUnavailable("16")} value="16">
+                  16:00 น.
+                </Radio>
+                <Radio isDisabled={isUnavailable("17")} value="17">
+                  17:00 น.
+                </Radio>
+              </SimpleGrid>
             </Stack>
           </RadioGroup>
         </FormControl>
