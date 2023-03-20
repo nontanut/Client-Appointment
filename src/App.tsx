@@ -4,6 +4,7 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
+  Hide,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -18,7 +19,6 @@ import { useForm } from "react-hook-form";
 import { useCallback, useMemo, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { PhoneIcon } from "@chakra-ui/icons";
 
 interface QueueData {
   firstName: string;
@@ -105,7 +105,7 @@ function App() {
   return (
     <Container bg="gray.50">
       <Text
-        bgImage="url('https://cdn.pixabay.com/photo/2016/05/24/16/48/mountains-1412683_1280.png')"
+        // bgImage="url('https://cdn.pixabay.com/photo/2016/12/21/18/34/clouds-1923545_1280.png')"
         bgPosition="center"
         bgRepeat="no-repeat"
         objectFit="cover"
@@ -114,11 +114,11 @@ function App() {
         pt={2}
         mt={2}
         fontWeight="bold"
-        color="white"
+        color="teal"
         borderBottom="4px"
         borderColor="teal"
       >
-        การจองคิว
+        ลงทะเบียน
       </Text>
       <Flex
         as="form"
@@ -233,7 +233,11 @@ function App() {
         <FormControl>
           <FormLabel>เวลา</FormLabel>
           <RadioGroup onChange={setTime} value={time} colorScheme="teal">
-            <Stack>
+            <Stack
+              direction={["column", "row"]}
+              wrap="wrap"
+              spacing="space-between"
+            >
               <Radio isDisabled={isUnavailable("12")} value="12">
                 12:00 น.
               </Radio>
