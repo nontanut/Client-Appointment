@@ -4,7 +4,6 @@ import {
   FormControl,
   FormHelperText,
   FormLabel,
-  Hide,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -235,7 +234,7 @@ function App() {
           <FormLabel>เวลา</FormLabel>
           <RadioGroup onChange={setTime} value={time} colorScheme="teal">
             <Stack>
-              <SimpleGrid columns={2}>
+              <SimpleGrid columns={[1, 2]}>
                 <Radio isDisabled={isUnavailable("12")} value="12">
                   12:00 น.
                 </Radio>
