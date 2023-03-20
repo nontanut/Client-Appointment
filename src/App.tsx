@@ -56,11 +56,15 @@ function App() {
     axios
       .post(`${import.meta.env.VITE_API}/create`, { ...newData })
       .then((res) => {
-        Swal.fire(
-          "บันทึกเรียบเรียบ",
-          "วันนัดหมายของท่านถูกบันทึกเรียบร้อยกรุณามาให้ตรงนัด",
-          "success"
-        );
+        Swal.fire({
+          title: "ขอบคุณที่ลงทะเบียนกับเรา",
+          text: `${choosen_branch}`,
+          imageUrl:
+            "https://drive.google.com/file/d/1NAmMWHkg1Hh_wCrgYzLmA4N6hRJ-jMV-/view?usp=share_link",
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: "Custom Image",
+        });
       })
       .catch((err) => {
         Swal.fire("แจ้งเตือน", err.res.data.error, "error");
@@ -95,7 +99,7 @@ function App() {
 
   const isUnavailable = useCallback(
     (time: string) => {
-      return available.get(time) >= 5;
+      return available.get(time) >= 10;
     },
     [available]
   );
@@ -192,6 +196,7 @@ function App() {
             <FormHelperText color="red">{errors.phone.message}</FormHelperText>
           )}
         </FormControl>
+
         <FormControl>
           <FormLabel>สาขา</FormLabel>
           <Select
@@ -212,6 +217,7 @@ function App() {
             <FormHelperText color="red">{"กรุณาเลือกสาขา"}</FormHelperText>
           )}
         </FormControl>
+
         <FormControl>
           <FormLabel>วันที่</FormLabel>
           <Input
@@ -234,6 +240,7 @@ function App() {
             </FormHelperText>
           )}
         </FormControl>
+
         <FormControl isInvalid={isSubmitted && time === ""}>
           <FormLabel>เวลา</FormLabel>
           <RadioGroup onChange={setTime} value={time} colorScheme="teal">
@@ -261,6 +268,7 @@ function App() {
             </Stack>
           </RadioGroup>
         </FormControl>
+
         <FormControl pt={2} mb={2}>
           <Input
             type="submit"
