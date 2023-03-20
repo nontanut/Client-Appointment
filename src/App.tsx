@@ -46,7 +46,7 @@ function App() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted },
     watch,
     reset,
   } = useForm<QueueData>();
@@ -197,6 +197,7 @@ function App() {
           <Select
             {...register("branch", {
               valueAsNumber: true,
+              required: true,
             })}
             placeholder="เลือกสาขา"
             bg="white"
@@ -207,6 +208,9 @@ function App() {
               </option>
             ))}
           </Select>
+          {errors.branch?.type === "required" && (
+            <FormHelperText color="red">{"กรุณาเลือกสาขา"}</FormHelperText>
+          )}
         </FormControl>
         <FormControl>
           <FormLabel>วันที่</FormLabel>
@@ -230,7 +234,7 @@ function App() {
             </FormHelperText>
           )}
         </FormControl>
-        <FormControl>
+        <FormControl isInvalid={isSubmitted && time === ""}>
           <FormLabel>เวลา</FormLabel>
           <RadioGroup onChange={setTime} value={time} colorScheme="teal">
             <Stack>
