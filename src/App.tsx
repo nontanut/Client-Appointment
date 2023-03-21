@@ -19,6 +19,8 @@ import { useForm } from "react-hook-form";
 import { useCallback, useMemo, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import * as dayjs from "dayjs";
+import "dayjs/locale/th";
 
 interface QueueData {
   firstName: string;
@@ -53,21 +55,47 @@ function App() {
   const onSubmit = (data: QueueData) => {
     const newData = { ...data, appoint_time: time };
 
+    const imgUrl = () => {
+      if (
+        choosen_branch === 88 ||
+        choosen_branch === 93 ||
+        choosen_branch === 94 ||
+        choosen_branch === 106
+      ) {
+        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/studio_7_dbcluc.png";
+      } else if (
+        choosen_branch === 96 ||
+        choosen_branch === 108 ||
+        choosen_branch === 116
+      ) {
+        return "https://res.cloudinary.com/pdev/image/upload/v1679369172/Appointment/kingkongphone_bttshl.png";
+      } else if (choosen_branch === 97 || choosen_branch === 102) {
+        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/bnn-logo-equip-640x640_lea8oh.webp";
+      } else if (choosen_branch === 108) {
+        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
+      } else if (choosen_branch === 123) {
+        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/oppo_vffgpe.png";
+      } else {
+        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
+      }
+    };
+
     axios
       .post(`${import.meta.env.VITE_API}/create`, { ...newData })
       .then((res) => {
         Swal.fire({
-          title: "ขอบคุณที่ลงทะเบียนกับเรา",
-          text: `${choosen_branch}`,
-          imageUrl:
-            "https://drive.google.com/file/d/1NAmMWHkg1Hh_wCrgYzLmA4N6hRJ-jMV-/view?usp=share_link",
+          title: "วันเวลานัดหมาย",
+          text: `สถานที่ : ${a()} วัน ${dayjs(choosen_date)
+            .locale("th")
+            .format("ddd ที่ DD/MM/YYYY")} เวลา ${time}:00 น.`,
+          imageUrl: imgUrl(),
           imageWidth: 400,
-          imageHeight: 200,
+          imageHeight: 400,
           imageAlt: "Custom Image",
         });
       })
       .catch((err) => {
-        Swal.fire("แจ้งเตือน", err.res.data.error, "error");
+        Swal.fire("แจ้งเตือน", err.response.data.message, "error");
       });
 
     reset();
