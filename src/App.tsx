@@ -74,12 +74,14 @@ function App() {
           imageAlt: "Custom Image",
         });
         reset();
+        console.log(res);
+        console.log(newData);
       })
       .catch((err) => {
         console.log(err);
         console.error(err);
 
-        Swal.fire("แจ้งเตือน", err.reponse.data.error, "error");
+        Swal.fire("แจ้งเตือน", "กรุณาตรวจสอบข้อมูล", "error");
       });
   };
 
