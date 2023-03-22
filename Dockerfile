@@ -1,6 +1,6 @@
+FROM node:lts
 ARG API_ENDPOINT
 ENV VITE_API=${API_ENDPOINT}
-FROM node:lts
 COPY package*.json ./
 RUN ["npm", "install"]
 COPY . ./
