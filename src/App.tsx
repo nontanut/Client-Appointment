@@ -66,7 +66,8 @@ function App() {
             .format(
               "ddd ที่ DD/MM/YYYY"
             )} เวลา ${time}:00 น.</p></hgroup><span style="color:red">เอกสารที่ต้องเตรียม: บัตรประชาชน</span>`,
-          imageUrl: imgUrl(),
+          imageUrl:
+            "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png",
           imageWidth: 400,
           imageHeight: 400,
           imageAlt: "Custom Image",
@@ -77,31 +78,6 @@ function App() {
       });
 
     reset();
-  };
-
-  const imgUrl = () => {
-    if (
-      choosen_branch === 88 ||
-      choosen_branch === 93 ||
-      choosen_branch === 94 ||
-      choosen_branch === 106
-    ) {
-      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/studio_7_dbcluc.png";
-    } else if (
-      choosen_branch === 96 ||
-      choosen_branch === 108 ||
-      choosen_branch === 116
-    ) {
-      return "https://res.cloudinary.com/pdev/image/upload/v1679393362/Appointment/kkp_logo_fmivp6.jpg";
-    } else if (choosen_branch === 97 || choosen_branch === 102) {
-      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/bnn-logo-equip-640x640_lea8oh.webp";
-    } else if (choosen_branch === 108) {
-      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
-    } else if (choosen_branch === 123) {
-      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/oppo_vffgpe.png";
-    } else {
-      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
-    }
   };
 
   const { data } = useSWR<Branches[]>("/branches");
