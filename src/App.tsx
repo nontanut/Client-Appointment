@@ -52,16 +52,17 @@ function App() {
     watch,
     reset,
   } = useForm<QueueData>();
+
   const onSubmit = (data: QueueData) => {
     const newData = { ...data, appoint_time: time };
 
-    axios
+    return axios
       .post(`${import.meta.env.VITE_API}/create`, { ...newData })
       .then((res) => {
         Swal.fire({
           title: "วันเวลานัดหมาย",
           html: `<hgroup><h3>สถานที่ : ${branchName}</h3>
-          <p>วัน ${dayjs(choosen_date)
+          <p>วัน ${dayjs(res.data[0].appoint_date * 1000)
             .locale("th")
             .format(
               "ddd ที่ DD/MM/YYYY"
@@ -72,12 +73,11 @@ function App() {
           imageHeight: 400,
           imageAlt: "Custom Image",
         });
+        reset();
       })
       .catch((err) => {
         Swal.fire("แจ้งเตือน", "ข้อมูลผิดพลาดกรุณาตรวจสอบ", "error");
       });
-
-    reset();
   };
 
   const { data } = useSWR<Branches[]>("/branches");
