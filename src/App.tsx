@@ -55,39 +55,17 @@ function App() {
   const onSubmit = (data: QueueData) => {
     const newData = { ...data, appoint_time: time };
 
-    const imgUrl = () => {
-      if (
-        choosen_branch === 88 ||
-        choosen_branch === 93 ||
-        choosen_branch === 94 ||
-        choosen_branch === 106
-      ) {
-        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/studio_7_dbcluc.png";
-      } else if (
-        choosen_branch === 96 ||
-        choosen_branch === 108 ||
-        choosen_branch === 116
-      ) {
-        return "https://res.cloudinary.com/pdev/image/upload/v1679369172/Appointment/kingkongphone_bttshl.png";
-      } else if (choosen_branch === 97 || choosen_branch === 102) {
-        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/bnn-logo-equip-640x640_lea8oh.webp";
-      } else if (choosen_branch === 108) {
-        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
-      } else if (choosen_branch === 123) {
-        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/oppo_vffgpe.png";
-      } else {
-        return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
-      }
-    };
-
     axios
       .post(`${import.meta.env.VITE_API}/create`, { ...newData })
       .then((res) => {
         Swal.fire({
           title: "วันเวลานัดหมาย",
-          text: `สถานที่ : ${a()} วัน ${dayjs(choosen_date)
+          html: `<hgroup><h3>สถานที่ : ${branchName}</h3>
+          <p>วัน ${dayjs(choosen_date)
             .locale("th")
-            .format("ddd ที่ DD/MM/YYYY")} เวลา ${time}:00 น.`,
+            .format(
+              "ddd ที่ DD/MM/YYYY"
+            )} เวลา ${time}:00 น.</p></hgroup><span style="color:red">เอกสารที่ต้องเตรียม: บัตรประชาชน</span>`,
           imageUrl: imgUrl(),
           imageWidth: 400,
           imageHeight: 400,
@@ -95,10 +73,35 @@ function App() {
         });
       })
       .catch((err) => {
-        Swal.fire("แจ้งเตือน", err.response.data.message, "error");
+        Swal.fire("แจ้งเตือน", "ข้อมูลผิดพลาดกรุณาตรวจสอบ", "error");
       });
 
     reset();
+  };
+
+  const imgUrl = () => {
+    if (
+      choosen_branch === 88 ||
+      choosen_branch === 93 ||
+      choosen_branch === 94 ||
+      choosen_branch === 106
+    ) {
+      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/studio_7_dbcluc.png";
+    } else if (
+      choosen_branch === 96 ||
+      choosen_branch === 108 ||
+      choosen_branch === 116
+    ) {
+      return "https://res.cloudinary.com/pdev/image/upload/v1679393362/Appointment/kkp_logo_fmivp6.jpg";
+    } else if (choosen_branch === 97 || choosen_branch === 102) {
+      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/bnn-logo-equip-640x640_lea8oh.webp";
+    } else if (choosen_branch === 108) {
+      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
+    } else if (choosen_branch === 123) {
+      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/oppo_vffgpe.png";
+    } else {
+      return "https://res.cloudinary.com/pdev/image/upload/v1679369173/Appointment/banana_qdalzr.png";
+    }
   };
 
   const { data } = useSWR<Branches[]>("/branches");
@@ -106,6 +109,12 @@ function App() {
 
   let choosen_date = watch("appoint_date");
   let choosen_branch = watch("branch");
+
+  const branchName = useMemo(() => {
+    if (!data) return;
+    for (let i = 0; i < data?.length; i++)
+      if (data[i].id === choosen_branch) return data[i].branch;
+  }, [data, choosen_branch]);
 
   const available = useMemo(() => {
     if (!free || choosen_branch === undefined) return new Map();
