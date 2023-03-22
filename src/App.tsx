@@ -53,10 +53,10 @@ function App() {
     reset,
   } = useForm<QueueData>();
 
-  const onSubmit = (data: QueueData) => {
+  const onSubmit = async (data: QueueData) => {
     const newData = { ...data, appoint_time: time };
 
-    return axios
+    return await axios
       .post(`${import.meta.env.VITE_API}/create`, { ...newData })
       .then((res) => {
         Swal.fire({
@@ -76,7 +76,10 @@ function App() {
         reset();
       })
       .catch((err) => {
-        Swal.fire("แจ้งเตือน", "ข้อมูลผิดพลาดกรุณาตรวจสอบ", "error");
+        console.log(err);
+        console.error(err);
+
+        Swal.fire("แจ้งเตือน", err.reponse.data.error, "error");
       });
   };
 
@@ -122,7 +125,6 @@ function App() {
   return (
     <Container bg="gray.50">
       <Text
-        // bgImage="url('https://cdn.pixabay.com/photo/2016/12/21/18/34/clouds-1923545_1280.png')"
         bgPosition="center"
         bgRepeat="no-repeat"
         objectFit="cover"
