@@ -53,10 +53,10 @@ function App() {
     reset,
   } = useForm<QueueData>();
 
-  const onSubmit = async (data: QueueData) => {
+  const onSubmit = (data: QueueData) => {
     const newData = { ...data, appoint_time: time };
 
-    return await axios
+    return axios
       .post(`${import.meta.env.VITE_API}/create`, { ...newData })
       .then((res) => {
         Swal.fire({
@@ -74,13 +74,9 @@ function App() {
           imageAlt: "Custom Image",
         });
         reset();
-        console.log(res);
-        console.log(newData);
       })
       .catch((err) => {
-        console.log(err);
         console.error(err);
-
         Swal.fire("แจ้งเตือน", "กรุณาตรวจสอบข้อมูล", "error");
       });
   };
