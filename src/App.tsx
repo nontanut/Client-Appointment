@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { useCallback, useMemo, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import "dayjs/locale/th";
 
 interface QueueData {
