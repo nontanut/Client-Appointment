@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:18
 ARG API_ENDPOINT
 ENV VITE_API=${API_ENDPOINT}
 COPY package*.json ./
